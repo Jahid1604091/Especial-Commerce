@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Col, Container, Row, Placeholder } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProducts } from '../actions/products';
+import Error from '../components/Error';
+import Loader from '../components/Loader';
+import Nothing from '../components/Nothing';
 import OffCanvas from '../components/Offcanvas';
 import Product from '../components/Product'
 
 export default function HomePage() {
 
-    const [products,setProducts] = useState([]);
+
     const [show, setShow] = useState(false);
     const [product, setProduct] = useState(null);
+    const dispatch = useDispatch();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -18,33 +24,40 @@ export default function HomePage() {
         handleShow()
     }
 
-    useEffect(()=>{
-        const fetchProducts = async () =>{
-          const res =  await fetch('/api/products')
-          const data = await res.json();
-          setProducts(data)
 
-        }
 
-        fetchProducts();
-    },[])
+    useEffect(() => {
+        dispatch(getAllProducts());
+    }, [])
+
+    const { loading, products, error } = useSelector(state => state.products);
+
+    if (loading) {
+        return <Loader />
+    }
+    if (error) {
+        return <Error />
+    }
+    if (products.length === 0) {
+        return <Nothing />
+    }
 
     return (
         <Container fluid>
             <Row>
                 <h2>Featured Products</h2>
                 {
-                    products.map(product =>
+                    products.length > 0 && products.map(product =>
                         <Col key={product._id} sm={12} md={4} xl={3}>
                             <Product handleClick={handleClick} {...product} />
                         </Col>)
                 }
             </Row>
 
-                <OffCanvas show={show}
-                 handleClose={handleClose} 
-                 product={product}/>
-            
+            <OffCanvas show={show}
+                handleClose={handleClose}
+                product={product} />
+
         </Container>
     )
 }
