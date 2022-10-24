@@ -9,7 +9,7 @@
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
     "data-import":"node backend/seeder",
-    "data-remove":"node backend/seeder d"
+    "data-remove":"node backend/seeder -d"
   },
   "repository": {
     "type": "git",
