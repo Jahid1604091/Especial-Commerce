@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import OffCanvas from '../components/Offcanvas';
 import Product from '../components/Product'
-import products from '../products'
+
 export default function HomePage() {
 
-
+    const [products,setProducts] = useState([]);
     const [show, setShow] = useState(false);
     const [product, setProduct] = useState(null);
 
@@ -17,6 +17,17 @@ export default function HomePage() {
         setProduct(p)
         handleShow()
     }
+
+    useEffect(()=>{
+        const fetchProducts = async () =>{
+          const res =  await fetch('/api/products')
+          const data = await res.json();
+          setProducts(data)
+
+        }
+
+        fetchProducts();
+    },[])
 
     return (
         <Container fluid>
