@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Row, Placeholder } from 'react-bootstrap'
+import { Col, Container, Row, Placeholder, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getAllProducts } from '../actions/products';
 import Error from '../components/Error';
 import Loader from '../components/Loader';
@@ -36,7 +37,13 @@ export default function HomePage() {
         return <Loader />
     }
     if (error) {
-        return <Error />
+        return <Error variant='danger' children={
+            <>
+                <h2>Oops!!!</h2>
+                <h3>Something Went Wrong</h3>
+                <Link to='/' className='btn btn-outline-info'>Go Back</Link>
+            </>
+        } />
     }
     if (products.length === 0) {
         return <Nothing />

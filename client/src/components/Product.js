@@ -4,7 +4,7 @@ import Rating from './Rating'
 import {Link} from 'react-router-dom'
 export default function Product({handleClick, _id, name, image, description, brand, category, price, rating, numReviews }) {
     return (
-        <Card className='my-2 p-3 shadow border-0' style={{ minHeight: "430px" }}>
+        <Card className='my-2 p-3 shadow border-0'>
             <a href='#!' onClick={()=>handleClick(_id)}
              style={{
                 color: '#000',

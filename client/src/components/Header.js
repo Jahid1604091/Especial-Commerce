@@ -18,7 +18,7 @@ export default function Header() {
             <Nav.Link as={Link} to="/support">Support</Nav.Link>
             <Nav.Link as={Link} to="/">Products</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/login">Login</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/cart">Cart</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/">
                 Profile
               </NavDropdown.Item>
