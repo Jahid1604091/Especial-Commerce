@@ -72,14 +72,16 @@ export default function CartPage() {
 
                 </Col>
                 <Col md={4}>
-                    <Card className='rounded-0 text-center mt-5 text-uppercase'>
+                    <Card className='rounded-0 text-center mt-5 text-uppercase'
+                    
+                    style={{lineHeight:'0.5'}}>
                         <ListGroup variant='flush'>
                             <ListGroup.Item>
                                 <BiShoppingBag size={30} />
                                 <p>Total Items : <Badge bg="info">{cartItems.reduce((acc, item) => acc + item.qty, 0)}</Badge> </p>
                                 <p>Subtotal : {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)} Tk</p>
-                                <p className='text-xl'>VAT : {(cartItems.reduce((acc, item) => acc + item.qty * item.price, 0) * .05).toFixed(2)} Tk</p>
-                                <Alert variant='info' className='fw-bold'>Total : &nbsp;
+                                <small className='text-xl'>VAT : {(cartItems.reduce((acc, item) => acc + item.qty * item.price, 0) * .05).toFixed(2)} Tk</small>
+                                <Alert variant='info' className='fw-bold my-3'>Total : &nbsp;
                                     {(cartItems.reduce((acc, item) => acc + item.qty * item.price, 0) + (cartItems.reduce((acc, item) => acc + item.qty * item.price, 0) * .05)).toFixed(2)} Tk
                                 </Alert>
 

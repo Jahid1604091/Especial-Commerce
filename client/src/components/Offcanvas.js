@@ -1,22 +1,25 @@
 import React, { useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Form, Row } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { BiCartAlt, BiCommentDots } from 'react-icons/bi';
 import Badge from 'react-bootstrap/Badge';
-import { useNavigate } from 'react-router-dom';
 import { addToCart } from '../actions/cart';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2'
+
 //product details page
 export default function OffCanvas({ show, handleClose, product }) {
     const [qty, setQty] = useState(1);
-    const navigate = useNavigate();
+ 
+
     const dispatch = useDispatch();
     const handleCart = () => {
         dispatch(addToCart(product._id, +qty))
-        // navigate(`/cart/${product?._id}?qty=${qty}`);
+        Swal.fire('Item added to cart')
     }
     return (
         <>
+              
             <Offcanvas placement='end' show={show} onHide={handleClose}>
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title as='h4'>{product?.name}</Offcanvas.Title>
