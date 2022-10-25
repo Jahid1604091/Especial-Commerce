@@ -6,6 +6,9 @@ const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
 connectDB();
 
+app.use(express.json());
+
+app.use('/api/users', require('./routes/users'));
 app.use('/api/products', require('./routes/products'));
 app.use(errorHandler);
 
