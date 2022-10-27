@@ -25,15 +25,16 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
     });
 });
 
-//@desc     get single user
-//@route    GET     /api/users/:id
-//@access   private/Admin
-exports.getUser = asyncHandler(async (req, res, next) => {
-    const user = await User.findById(req.params.id)
-    return res.status(200).json({
-        success: true,
-        data: user
-    });
+//@desc     get profile
+//@route    GET     /api/users/profile
+//@access   private
+exports.getProfile = asyncHandler(async (req, res, next) => {
+    res.send(req.user)
+    // const user = await User.findById(req.params.id)
+    // return res.status(200).json({
+    //     success: true,
+    //     data: user
+    // });
 });
 
 //@desc     get auth user
