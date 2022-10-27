@@ -7,11 +7,21 @@ const ErrorResponse = require('../utils/errorResponse');
 //@access   private/Admin
 exports.createUser = asyncHandler(async (req, res, next) => {
  
-    const user = await User.create(req.body)
-    return res.status(200).json({
-        success: true,
-        data: user
-    });
+    const isExist = await User.findOne({email:req.body.email});
+    if(isExist){
+        return next(new ErrorResponse('User Already Exist',400))
+    }
+    const user = await User.create(req.body);
+    if(user){
+        return res.status(201).json({
+            success: true,
+            data: user,
+            token:user.getSignedJwtToken()
+        });
+    }
+    else{
+        return next(new ErrorResponse('Invalid Data',400));
+    }
 });
 
 //@desc     get all users
