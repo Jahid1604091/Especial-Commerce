@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import CartPage from './pages/CartPage';
 import HomePage from "./pages/HomePage";
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <main style={{ minHeight: "81vh" }}>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/cart/:id" element={<CartPage />} />
         </Routes>

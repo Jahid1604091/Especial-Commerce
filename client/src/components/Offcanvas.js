@@ -5,7 +5,7 @@ import { BiCartAlt, BiCommentDots } from 'react-icons/bi';
 import Badge from 'react-bootstrap/Badge';
 import { addToCart } from '../actions/cart';
 import { useDispatch } from 'react-redux';
-import Swal from 'sweetalert2'
+import Toast from '../utils/alert';
 
 //product details page
 export default function OffCanvas({ show, handleClose, product }) {
@@ -15,7 +15,10 @@ export default function OffCanvas({ show, handleClose, product }) {
     const dispatch = useDispatch();
     const handleCart = () => {
         dispatch(addToCart(product._id, +qty))
-        Swal.fire('Item added to cart')
+        Toast.fire({
+            icon: 'success',
+            title: 'Item Added to Cart!'
+          })
     }
     return (
         <>
