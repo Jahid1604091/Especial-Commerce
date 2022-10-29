@@ -4,7 +4,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require('./async');
 
 exports.protect = asyncHandler(async(req,res,next)=>{
-    let token;
+    let token = null;
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1];
     }
@@ -21,6 +21,7 @@ exports.protect = asyncHandler(async(req,res,next)=>{
         req.user = await User.findById(decoded.id);
         next();
     } catch (error) {
+        
         return next(new ErrorResponse('Unauthorized user',401));
 
     }

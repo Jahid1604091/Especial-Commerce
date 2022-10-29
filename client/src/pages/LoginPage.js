@@ -15,7 +15,7 @@ export default function LoginPage() {
     const { error, userInfo, loading } = useSelector(state => state.userLogin);
 
     const location = useLocation();
-    const redirect = location.search ? location.search.split('=')[1] : '/';
+    const redirect = location.search ? location.search.split('=')[1] : '/profile';
     useEffect(() => {
         if (userInfo.success) {
             navigate(redirect)

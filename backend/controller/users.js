@@ -4,7 +4,7 @@ const ErrorResponse = require('../utils/errorResponse');
 
 //@desc     create user
 //@route    POST    /api/users
-//@access   private/Admin
+//@access   private
 exports.createUser = asyncHandler(async (req, res, next) => {
  
     const isExist = await User.findOne({email:req.body.email});
@@ -24,27 +24,42 @@ exports.createUser = asyncHandler(async (req, res, next) => {
     }
 });
 
-//@desc     get all users
-//@route    GET     /api/users
-//@access   private/Admin
-exports.getUsers = asyncHandler(async (req, res, next) => {
-    const users = await User.find({});
-    return res.status(200).json({
-        success: true,
-        data: users
-    });
-});
 
 //@desc     get profile
 //@route    GET     /api/users/profile
 //@access   private
 exports.getProfile = asyncHandler(async (req, res, next) => {
-    res.send(req.user)
-    // const user = await User.findById(req.params.id)
-    // return res.status(200).json({
-    //     success: true,
-    //     data: user
-    // });
+    const user = await User.findById(req.user.id).select('+password');
+    if(!user){
+        return next(new ErrorResponse('User not found',404));
+    }
+    return res.status(200).json({
+        success: true,
+        data: user
+    });
+});
+
+
+//@desc     update profile
+//@route    PUT    /api/users/profile
+//@access   private
+exports.updateProfile = asyncHandler(async (req, res, next) => {
+   
+    const user = await User.findById(req.user);
+    if(!user){
+        return next(new ErrorResponse('User not found',404));
+    }
+    if(!req.body.password){
+        return next(new ErrorResponse('Please provide your password ',404));
+    }
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+    user.password = req.body.password
+    const updatedUser = await user.save();
+    return res.status(200).json({
+        success: true,
+        data: updatedUser
+    });
 });
 
 //@desc     get auth user
@@ -64,4 +79,18 @@ exports.authUser = asyncHandler(async (req, res, next) => {
        
         return next(new ErrorResponse(`Invalid email or password`, 401));
     }
+});
+
+
+
+
+//@desc     get all users
+//@route    GET     /api/users
+//@access   private/Admin
+exports.getUsers = asyncHandler(async (req, res, next) => {
+    const users = await User.find({});
+    return res.status(200).json({
+        success: true,
+        data: users
+    });
 });

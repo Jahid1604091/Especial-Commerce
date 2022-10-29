@@ -17,7 +17,7 @@ export default function RegisterPage() {
     const { error, userInfo, loading } = useSelector(state => state.userRegister);
     const [passError,setPassError] = useState(false)
     const location = useLocation();
-    const redirect = location.search ? location.search.split('=')[1] : '/';
+    const redirect = location.search ? location.search.split('=')[1] : '/profile';
     useEffect(() => {
         if (userInfo?.success) {
             navigate(redirect)
