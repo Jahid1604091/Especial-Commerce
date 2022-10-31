@@ -2,6 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter,Routes, Route } from 'react-router-dom';
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import ProductsList from './pages/admin/ProductsList';
+import UsersList from './pages/admin/UsersList';
 import CartPage from './pages/CartPage';
 import HomePage from "./pages/HomePage";
 import LoginPage from './pages/LoginPage';
@@ -26,6 +28,9 @@ function App() {
           <Route path="/shipping" element={<ShippingPage />} />
           <Route path='/payment' element={<PaymentPage/>} />
            <Route path='/placeorder' element={<PlaceOrderPage/>} />
+
+           <Route path='/admin/users' element={<UsersList/>} />
+           <Route path='/admin/products' element={<ProductsList/>} />
           {/* <Route path='/order/:id' component={OrderScreen} /> */} 
         </Routes>
       </main>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap'
+import AlertDismissible from '../components/Alert'
+import Loader from '../components/Loader'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { login } from '../actions/user'
-import AlertDismissible from '../components/Alert'
-import Loader from '../components/Loader'
 
 
 export default function LoginPage() {
