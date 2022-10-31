@@ -28,21 +28,21 @@ export default function ProfilePage() {
             navigate('/login')
         }
         else {
-           
-           
+
+
             if (!user.success) {
                 dispatch(getProfile())
             }
             else {
                 setName(user?.data.name)
                 setEmail(user?.data.email)
-             
+
             }
         }
 
-    }, [userInfo,user, navigate, dispatch])
+    }, [userInfo, user, navigate, dispatch])
 
-    console.log(user)
+
     const submitHandler = (e) => {
         e.preventDefault()
         dispatch(updateProfile({ name, email, password }))

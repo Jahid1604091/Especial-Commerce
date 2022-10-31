@@ -1,6 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-import { ADD_TO_CART, CLEAR_CART, REMOVE_FROM_CART } from "../types"
+import { ADD_TO_CART, CART_SAVE_PAYMENT_METHOD, CART_SAVE_SHIPPING_ADDRESS, CLEAR_CART, REMOVE_FROM_CART } from "../types"
 
 //getState return all store states
 export const addToCart = (id,qty) => async (dispatch,getState) =>{
@@ -10,7 +10,7 @@ export const addToCart = (id,qty) => async (dispatch,getState) =>{
    
     dispatch({
         type:ADD_TO_CART,
-        payload:{...product,qty}
+        payload:{...product,product:product._id,qty}
     })
     localStorage.setItem('cartItems',JSON.stringify(getState().cart.cartItems));
 }
@@ -46,4 +46,20 @@ export const clearCart = () => async (dispatch,getState) =>{
         type:CLEAR_CART,
     })
     localStorage.setItem('cartItems',JSON.stringify(getState().cart.cartItems));
+}
+
+export const saveShippingAddress = (data) =>(dispatch) =>{
+  dispatch({
+      type:CART_SAVE_SHIPPING_ADDRESS,
+      payload:data
+  })
+  localStorage.setItem('shippingAddress',JSON.stringify(data))
+}
+
+export const savePaymentMethod = (data) =>(dispatch) =>{
+  dispatch({
+      type:CART_SAVE_PAYMENT_METHOD,
+      payload:data
+  })
+  localStorage.setItem('paymentMethod',JSON.stringify(data))
 }

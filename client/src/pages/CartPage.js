@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Alert, Badge, Button, Card, Col, Container, Form, Image, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { BiTrashAlt, BiShoppingBag } from 'react-icons/bi';
 import { addToCart, removeFromCart,clearCart } from '../actions/cart';
 import Error from '../components/Error';
@@ -9,12 +9,12 @@ import Error from '../components/Error';
 export default function CartPage() {
     const location = useLocation();
     const { id } = useParams();
-    const qty = +location.search.split('=')[1]
+    const qty = +location.search.split('=')[1];
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
+    
     const { cartItems } = useSelector(state => state.cart)
-
-
+    const { userInfo } = useSelector(state => state.userLogin)
 
     useEffect(() => {
         if (id) {
@@ -28,6 +28,12 @@ export default function CartPage() {
             <Link to='/' className='btn btn-outline-primary rounded-0'>Fill Now</Link>
         </Error>
     }
+
+
+    const handleClick = () =>{
+      userInfo.success ?  navigate('/shipping') : navigate('/login')
+    }
+
     return (
         <Container>
             <Row className='my-4'>
@@ -86,7 +92,7 @@ export default function CartPage() {
                                 </Alert>
 
                                 <div className="py-2">
-                                    <Button variant="dark" className='rounded-0'>Continue</Button>
+                                    <Button variant="dark" className='rounded-0' onClick={handleClick}>Continue</Button>
                                 </div>
                             </ListGroup.Item>
 
