@@ -13,9 +13,11 @@ import { getAllProducts } from '../../actions/products';
 import AddProduct from '../../components/admin/AddProductModal';
 import EditProduct from '../../components/admin/EditproductModal';
 
+
 export default function ProductsList() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     //modal
     const [show, setShow] = useState(false);
     const [editShow, setEditShow] = useState(false);
@@ -75,6 +77,7 @@ export default function ProductsList() {
 
     }
 
+    console.log(products)
     if (loading) {
         return <Loader />
     }
@@ -110,12 +113,14 @@ export default function ProductsList() {
 
                             </tr>
                         </thead>
+                        {/* <img src={require('./uploads/image_1667288130892.jpg')} alt="dfg" /> */}
                         <tbody>
                             {
                                 products?.map((product, idx) => (
                                     <tr key={product._id}>
                                         <td>{idx + 1}</td>
-                                        <td>{<img src={product.image} alt="" width='50' height='40'/>}</td>
+                                        
+                                        <td>{<img src={`${product.image}`} alt="" width='50' height='40'/>}</td>
                                         <td>{product.name}</td>
                                         <td>{product.brand}</td>
                                         <td>{product.category}</td>

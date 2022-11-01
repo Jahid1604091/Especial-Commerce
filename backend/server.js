@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const PORT = 5000 || process.env.PORT;
 require('dotenv').config();
 const connectDB = require('./config/db');
@@ -11,6 +12,9 @@ app.use(express.json());
 app.use('/api/users', require('./routes/users'));
 app.use('/api/products', require('./routes/products'));
 app.use('/api/orders', require('./routes/orders'));
+app.use('/api/upload', require('./routes/uploads'));
+
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 app.use(errorHandler);
 
 app.listen(PORT, () => {
