@@ -11,22 +11,29 @@ import Swal from 'sweetalert2';
 import Error from '../../components/Error';
 import { getAllProducts } from '../../actions/products';
 import AddProduct from '../../components/admin/AddProductModal';
+import EditProduct from '../../components/admin/EditproductModal';
 
 export default function ProductsList() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     //modal
     const [show, setShow] = useState(false);
+    const [editShow, setEditShow] = useState(false);
     const handleShow = () =>{
         setShow(true)
+    }
+    const handleEditShow = () =>{
+        setEditShow(true)
     }
 
     const { userInfo } = useSelector(state => state.userLogin);
 
     const {success} = useSelector(state => state.deleteProductByAdmin);
+    const { success:updateSuccess } = useSelector(state => state.updateProductByAdmin);
 
     const { loading, error,products } = useSelector(state => state.products);
 
+    const { product} = useSelector(state => state.addProductByAdmin);
     useEffect(() => {
         if (userInfo && userInfo?.data?.role === 'admin') {
             dispatch(getAllProducts());
@@ -34,7 +41,7 @@ export default function ProductsList() {
         else {
             navigate('/login')
         }
-    }, [dispatch, navigate, userInfo,success])
+    }, [dispatch, navigate, userInfo,success,product,updateSuccess])
 
    
     const deleteHandler = (id) => {
@@ -61,6 +68,12 @@ export default function ProductsList() {
        
     }
 
+    const [editableProduct,setEditableProduct] = useState(null);
+    const editHandler = product =>{
+        setEditableProduct(product);
+        handleEditShow()
+
+    }
 
     if (loading) {
         return <Loader />
@@ -72,6 +85,7 @@ export default function ProductsList() {
     return (
         <Container>
             <AddProduct show={show} setShow={setShow}/>
+            <EditProduct show={editShow} setShow={setEditShow} editableProduct = {editableProduct}/>
             <Row className='my-2'>
                 <Col className='me-auto'>
                     <Button variant='primary' onClick={handleShow} type='submit' className='rounded-0'><BiPlusCircle size={23}/> Add Product</Button>
@@ -110,7 +124,7 @@ export default function ProductsList() {
                                         <td>{product.rating}</td>
                                         <td>
                                             <ButtonGroup>
-                                            <span className='text-info' onClick={() => deleteHandler(product._id)}>
+                                            <span className='text-info' onClick={() => editHandler(product)}>
                                                 <BiEditAlt size={20} />
                                             </span>
                                             <span className='text-danger' onClick={() => deleteHandler(product._id)}>
