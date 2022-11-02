@@ -11,7 +11,7 @@ export default function EditProduct({ show, setShow, editableProduct }) {
 
     
     const dispatch = useDispatch();
-
+ 
     const [formData, setFormData] = useState({ name:'',description: '', image: '', price: '', countInStock: '', brand: '', category: '' });
     
 
