@@ -46,8 +46,8 @@ export default function OrderDetailsPage() {
                             <p>Name :  <span className='fw-lighter fst-italic'>{order?.user.name}</span></p>
                             <p>Email :  <span className='fw-lighter fst-italic'>{order?.user.email}</span></p>
                             <p className='fw-bold text-uppercase'>Your Order Status </p>
-                            {order?.isPaid ? <p className='bg-info text-light px-2 fw-bold d-flex align-items-center'><TiTick size={23}/> &nbsp;{order?.paidAt}</p> :<p className='bg-secondary text-light px-2 fw-bold d-flex align-items-center'><FaTimesCircle size={15}/>&nbsp;Not Paid</p>}
-                            {order?.isDelivered ? <p className='bg-info text-light px-2 fw-bold d-flex align-items-center'><TiTick size={23}/>&nbsp;{order?.deliveredAt}</p> :<p className='bg-secondary text-light px-2 fw-bold d-flex align-items-center'><FaTimesCircle/>&nbsp;Not Delivered</p>}
+                            {order?.isPaid ? <p className='bg-info text-light px-2 fw-bold d-flex align-items-center'><TiTick size={23}/> &nbsp;Paid at {order?.paidAt}</p> :<p className='bg-secondary text-light px-2 fw-bold d-flex align-items-center'><FaTimesCircle size={15}/>&nbsp;Not Paid</p>}
+                            {order?.isDelivered ? <p className='bg-info text-light px-2 fw-bold d-flex align-items-center'><TiTick size={23}/>&nbsp;Delivered on {order?.deliveredAt}</p> :<p className='bg-secondary text-light px-2 fw-bold d-flex align-items-center'><FaTimesCircle/>&nbsp;Not Delivered</p>}
                         </ListGroup.Item>
                         <ListGroup.Item className='border-0 pb-0'>
                             Payment Method : <span className='fw-lighter fst-italic'> {order?.paymentMethod}</span>
