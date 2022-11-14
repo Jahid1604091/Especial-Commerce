@@ -10,6 +10,7 @@ import { TiTick } from 'react-icons/ti';
 import { FaTimesCircle } from 'react-icons/fa';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import { deliverOrder } from '../actions/admin';
 
 export default function OrderDetailsPage() {
     // const order = useSelector(state => state.order);
@@ -18,9 +19,11 @@ export default function OrderDetailsPage() {
     const navigate = useNavigate()
     const { id } = useParams();
     const { order, loading, error } = useSelector(state => state.myOrderDetails);
+    const { updatedOrder} = useSelector(state => state.orderDeliver);
     const { userInfo } = useSelector(state => state.userLogin)
     const [isValidated, setIsValidated] = useState(false)
     const { search } = useLocation();
+    
     
     useEffect(() => {
         if (search.split('=')[1] === 'VALID') {
@@ -31,7 +34,7 @@ export default function OrderDetailsPage() {
 
     useEffect(() => {
         dispatch(getMyOrderDetails(id))
-    }, [id,isValidated])
+    }, [id,isValidated,updatedOrder])
 
     const paymentHandler = async () => {
         const config = {
@@ -47,6 +50,10 @@ export default function OrderDetailsPage() {
         }
         const { data: { data } } = await axios.post('/api/payment/ssl-request', payment_data, config)
         await window.location.replace(data?.GatewayPageURL)
+    }
+  
+    const deliverHandler = () =>{
+        dispatch(deliverOrder(id))
     }
 
     if (order !== undefined) {
@@ -141,6 +148,8 @@ export default function OrderDetailsPage() {
                         </ListGroup>
                         <div className='text-center mt-2'>
                             {!order?.isPaid && <Button onClick={paymentHandler} type='submit' className='px-4 text-light text-uppercase rounded-0 shadow' variant='primary'>Make payment</Button>
+                            }
+                            {userInfo?.data.role === 'admin' && !order?.isDelivered && <Button onClick={deliverHandler} type='submit' className='px-4 text-light text-uppercase rounded-0 shadow' variant='primary'>Mark As Delivered</Button>
                             }
                         </div>
                     </Card>

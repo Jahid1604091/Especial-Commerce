@@ -57,6 +57,7 @@ exports.updateOrderToPaid = asyncHandler(async (req, res) => {
     });
 })
 
+
 //@route    /api/orders/
 //@desc     GET all  orders
 //@access   protected/Admin
@@ -67,3 +68,20 @@ exports.getAllOrders = asyncHandler(async (req, res) => {
         data: orders
     });
 })
+
+//@route    /api/orders/:id/mark-as-delivered
+//@desc     GET     update order to delivered
+//@access   protected/Admin
+exports.updateOrderToDelivered = asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+    
+    const updatedOrder = await order.save();
+    return res.status(200).json({
+        success: true,
+        data: updatedOrder
+    });
+})
+
+
