@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import AlertDismissible from '../components/Alert';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { getMyOrderDetails } from '../actions/orders';
+import { getMyOrderDetails, payOrder } from '../actions/orders';
 import { TiTick } from 'react-icons/ti';
 import { FaTimesCircle } from 'react-icons/fa';
 import axios from 'axios';
@@ -23,15 +23,16 @@ export default function OrderDetailsPage() {
     const { search } = useLocation();
     
     useEffect(() => {
-        dispatch(getMyOrderDetails(id))
-    }, [id])
-
-    useEffect(() => {
         if (search.split('=')[1] === 'VALID') {
             setIsValidated(true)
+            dispatch(payOrder(id))
         }
-    }, [isValidated,search])
-    
+    }, [isValidated,search,id])
+
+    useEffect(() => {
+        dispatch(getMyOrderDetails(id))
+    }, [id,isValidated])
+
     const paymentHandler = async () => {
         const config = {
             headers: {
@@ -45,13 +46,7 @@ export default function OrderDetailsPage() {
             tran_id: id,
         }
         const { data: { data } } = await axios.post('/api/payment/ssl-request', payment_data, config)
-        console.log(data)
         await window.location.replace(data?.GatewayPageURL)
-
-        // window.location = data?.GatewayPageURL
-        // console.log(' response : '+data)
-        // const { data: { data:validatedData } } = await axios.post('/api/payment/ssl-validate', data, config)
-        // console.log('validated : '+validatedData)
     }
 
     if (order !== undefined) {
