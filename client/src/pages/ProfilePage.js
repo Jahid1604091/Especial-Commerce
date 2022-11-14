@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap'
+import { Button, Col, Container, FloatingLabel, Form, Row, Table } from 'react-bootstrap'
+import { FaTimesCircle } from 'react-icons/fa'
+import { TiTick } from 'react-icons/ti'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { getMyOrders } from '../actions/orders'
 import { getProfile, updateProfile } from '../actions/user'
 import AlertDismissible from '../components/Alert'
 import Loader from '../components/Loader'
@@ -16,6 +19,8 @@ export default function ProfilePage() {
     const { error, user, loading } = useSelector(state => state.userProfile);
     const { error: updateError, success } = useSelector(state => state.userProfileUpdate);
 
+    const { orders, loading:ordersLoading, error:ordersError } = useSelector(state => state.myOrders);
+
 
     const location = useLocation();
 
@@ -28,8 +33,6 @@ export default function ProfilePage() {
             navigate('/login')
         }
         else {
-
-
             if (!user.success) {
                 dispatch(getProfile())
             }
@@ -42,6 +45,11 @@ export default function ProfilePage() {
 
     }, [userInfo, user, navigate, dispatch])
 
+    useEffect(() => {
+        if (userInfo && userInfo?.data?.role !== 'admin') {
+            dispatch(getMyOrders());
+        }
+    }, [dispatch, navigate, userInfo])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -51,7 +59,7 @@ export default function ProfilePage() {
     return (
         <Container>
             <Row className='justify-content-md-center' style={{ minHeight: '81vh' }}>
-                <Col xs={12} md={5} className='m-auto'>
+                <Col xs={12} md={5} className='mx-auto my-2'>
                     {updateError && <AlertDismissible message={updateError} variant='danger' />}
                     {success && <AlertDismissible message='Profile Updated !' variant='success' />}
                     {loading && <Loader />}
@@ -101,20 +109,42 @@ export default function ProfilePage() {
 
 
                 {/* orders */}
-                <Col xs={12} md={6} className='m-auto'>
+                <Col xs={12} md={6} className='mx-auto my-2'>
                     {error && <AlertDismissible message={error} variant='danger' />}
                     {loading && <Loader />}
-                    <h2>My Orders</h2>
-                    <Form onSubmit={submitHandler}>
+                    <h4>My Orders</h4>
+                    <Table striped bordered size="sm" hover responsive>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Total Price</th>
+                                <th>Paid</th>
+                                <th>Delivered</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                orders?.map((order, idx) => (
+                                    <tr key={order._id}>
+                                        <td>{idx + 1}</td>
+                                        <td>{order.createdAt}</td>
+                                        <td>{order.totalPrice} Tk</td>
+                                        <td>{order.isPaid ? <TiTick size={23} /> : <FaTimesCircle />}</td>
+                                        <td>{order.isDelivered ? <TiTick size={23} /> : <FaTimesCircle />}</td>
+                                        <td>
+                                            <Link to={`/orders/${order._id}`} className='text-dark rounded-0 px-2 py-1'>
+                                                Details
+                                            </Link>
 
+                                        </td>
 
-
-
-                        <div className="text-center">
-                            <Button type='submit' className='px-4 text-light text-uppercase rounded-0 shadow' variant='primary'>Save Changes</Button>
-                        </div>
-
-                    </Form>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </Table>
 
                 </Col>
             </Row>

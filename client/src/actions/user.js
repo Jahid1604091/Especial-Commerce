@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_USER_PROFILE_FAIL, GET_USER_PROFILE_REQUEST, GET_USER_PROFILE_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_UPDATE_FAIL, USER_PROFILE_UPDATE_REQUEST, USER_PROFILE_UPDATE_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from "../types";
+import { GET_MY_ORDERS_RESET, GET_USER_PROFILE_FAIL, GET_USER_PROFILE_REQUEST, GET_USER_PROFILE_RESET, GET_USER_PROFILE_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_UPDATE_FAIL, USER_PROFILE_UPDATE_REQUEST, USER_PROFILE_UPDATE_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from "../types";
 
 export const login = (email,password) => async(dispatch)=>{
     try {
@@ -117,8 +117,8 @@ export const updateProfile = (userData) => async(dispatch,getState)=>{
 
 export const logout = () => async(dispatch)=>{
     localStorage.removeItem('userInfo');
-    dispatch({
-        type: USER_LOGOUT,
-    })
+    dispatch({type: USER_LOGOUT,})
+    dispatch({type: GET_USER_PROFILE_RESET,})
+    dispatch({type: GET_MY_ORDERS_RESET,})
 
 }
