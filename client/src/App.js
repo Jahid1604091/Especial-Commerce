@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from './pages/LoginPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
 import PaymentPage from './pages/PaymentPage';
+import PaymentSuccess from './pages/PaymentSuccess';
 import PlaceOrderPage from './pages/PlaceOrderPage';
 import ProfilePage from './pages/ProfilePage';
 import RegisterPage from './pages/RegisterPage';
@@ -31,6 +32,7 @@ function App() {
           <Route path='/payment' element={<PaymentPage />} />
           <Route path='/placeorder' element={<PlaceOrderPage />} />
           <Route path='/orders/:id' element={<OrderDetailsPage />} />
+          <Route path='/payment/success' element={<PaymentSuccess />} />
           
           <Route path='/admin/orders' element={<OrdersList />} />
           <Route path='/admin/users' element={<UsersList />} />

@@ -1,4 +1,4 @@
-import { CREATE_ORDER_FAIL, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, GET_MY_ORDERS_DETAILS_FAIL, GET_MY_ORDERS_DETAILS_REQUEST, GET_MY_ORDERS_DETAILS_SUCCESS, GET_MY_ORDERS_FAIL, GET_MY_ORDERS_REQUEST, GET_MY_ORDERS_SUCCESS } from "../types";
+import { CREATE_ORDER_FAIL, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, GET_MY_ORDERS_DETAILS_FAIL, GET_MY_ORDERS_DETAILS_REQUEST, GET_MY_ORDERS_DETAILS_SUCCESS, GET_MY_ORDERS_FAIL, GET_MY_ORDERS_REQUEST, GET_MY_ORDERS_SUCCESS, ORDER_PAY_FAIL, ORDER_PAY_REQUEST, ORDER_PAY_RESET, ORDER_PAY_SUCCESS } from "../types";
 
 export const createOrderReducer = (state = {}, action) => {
     const { type, payload } = action;
@@ -53,7 +53,7 @@ export const myOrdersReducer = (state = { orders: [], }, action) => {
     }
 }
 
-export const myOrderDetailsReducer = (state = { orderItems: [],shippingAddress:{} }, action) => {
+export const myOrderDetailsReducer = (state = { orderItems: [], shippingAddress: {} }, action) => {
     const { type, payload } = action;
 
     switch (type) {
@@ -76,6 +76,38 @@ export const myOrderDetailsReducer = (state = { orderItems: [],shippingAddress:{
                 error: payload
             }
 
+        default:
+            return state
+    }
+}
+
+export const orderPayReducer = (state = {}, action) => {
+    const { type, payload } = action;
+
+    switch (type) {
+        case ORDER_PAY_REQUEST:
+            return {
+                ...state, loading: true
+            }
+
+        case ORDER_PAY_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                updatedOrder: payload
+            }
+
+        case ORDER_PAY_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: payload
+            }
+
+        case ORDER_PAY_RESET:
+            return {
+                ...state
+            }
         default:
             return state
     }
