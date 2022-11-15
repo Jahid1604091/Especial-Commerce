@@ -7,13 +7,14 @@ import Error from '../components/Error';
 import Loader from '../components/Loader';
 import Nothing from '../components/Nothing';
 import OffCanvas from '../components/Offcanvas';
+import Paginate from '../components/Paginate';
 import Product from '../components/Product'
 
 export default function HomePage() {
     const [show, setShow] = useState(false);
     const [product, setProduct] = useState(null);
     const dispatch = useDispatch();
-    const {query} = useParams();
+    const { query, pageNumber } = useParams();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -23,13 +24,13 @@ export default function HomePage() {
         setProduct(p)
         handleShow()
     }
-    const { loading, products, error } = useSelector(state => state.products);
+    const { loading, products, error, page, pages } = useSelector(state => state.products);
     const { success } = useSelector(state => state.addReview);
 
-   
+
     useEffect(() => {
-        dispatch(getAllProducts(query));
-    }, [success,query])
+        dispatch(getAllProducts(query, Number(pageNumber) || 1));
+    }, [success, query, Number(pageNumber) || 1])
 
 
     if (loading) {
@@ -59,7 +60,7 @@ export default function HomePage() {
                         </Col>)
                 }
             </Row>
-
+            <Paginate page={page} pages={pages} query={query ? query : ''} />
             <OffCanvas show={show}
                 handleClose={handleClose}
                 product={product} />

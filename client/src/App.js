@@ -22,8 +22,10 @@ function App() {
       <Header />
       <main style={{ minHeight: "81vh" }}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/page/:pageNumber" element={<HomePage />} />
           <Route path="/search/:query" element={<HomePage />} />
+          <Route path="/search/:query/page/:pageNumber" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />
@@ -38,6 +40,7 @@ function App() {
           <Route path='/admin/orders' element={<OrdersList />} />
           <Route path='/admin/users' element={<UsersList />} />
           <Route path='/admin/products' element={<ProductsList />} />
+          <Route path='/admin/products/:pageNumber' element={<ProductsList />} />
         </Routes>
       </main>
       <Footer />

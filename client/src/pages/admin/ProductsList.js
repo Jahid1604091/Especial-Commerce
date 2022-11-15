@@ -4,7 +4,7 @@ import { deleteProductByAdmin} from '../../actions/admin';
 import { Button, ButtonGroup, Col, Container, FloatingLabel, Form, Row, Table } from 'react-bootstrap'
 import AlertDismissible from '../../components/Alert'
 import Loader from '../../components/Loader'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { BiEditAlt, BiPlusCircle } from 'react-icons/bi';
 import { BsTrash } from 'react-icons/bs';
 import Swal from 'sweetalert2';
@@ -12,11 +12,13 @@ import Error from '../../components/Error';
 import { getAllProducts } from '../../actions/products';
 import AddProduct from '../../components/admin/AddProductModal';
 import EditProduct from '../../components/admin/EditproductModal';
+import Paginate from '../../components/Paginate';
 
 
 export default function ProductsList() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {pageNumber} = useParams();
 
     //modal
     const [show, setShow] = useState(false);
@@ -33,12 +35,12 @@ export default function ProductsList() {
     const {success} = useSelector(state => state.deleteProductByAdmin);
     const { success:updateSuccess } = useSelector(state => state.updateProductByAdmin);
 
-    const { loading, error,products } = useSelector(state => state.products);
+    const { loading, error,products,pages,page } = useSelector(state => state.products);
 
     const { product} = useSelector(state => state.addProductByAdmin);
     useEffect(() => {
         if (userInfo && userInfo?.data?.role === 'admin') {
-            dispatch(getAllProducts());
+            dispatch(getAllProducts('',Number(pageNumber)||1));
         }
         else {
             navigate('/login')
@@ -77,7 +79,6 @@ export default function ProductsList() {
 
     }
 
-    console.log(products)
     if (loading) {
         return <Loader />
     }
@@ -144,6 +145,7 @@ export default function ProductsList() {
                             }
                         </tbody>
                     </Table>
+                    <Paginate pages={pages} page={page} isAdmin={true}/>
                 </Col>
             </Row>
         </Container>

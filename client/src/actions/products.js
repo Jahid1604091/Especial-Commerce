@@ -1,10 +1,10 @@
 import { ADD_REVIEW_FAIL, ADD_REVIEW_REQUEST, ADD_REVIEW_SUCCESS, GET_PRODUCTS_FAIL, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, PRODUCTS_SEARCH_FAIL, PRODUCTS_SEARCH_REQUEST, PRODUCTS_SEARCH_SUCCESS } from "../types"
 import axios from 'axios';
-export const getAllProducts = (query='') => async (dispatch) =>{
+export const getAllProducts = (query='',perPage='') => async (dispatch) =>{
     try {
         dispatch({type:GET_PRODUCTS_REQUEST});
 
-        const {data} =  await axios.get(`/api/products?q=${query}`);
+        const {data} =  await axios.get(`/api/products?q=${query}&pageNumber=${perPage}`);
         dispatch({
             type:GET_PRODUCTS_SUCCESS,
             payload:data
