@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
 const bodyParser = require("body-parser")    
 const path = require('path');
 const PORT = 5000 || process.env.PORT;
@@ -8,6 +9,11 @@ require('dotenv').config();
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
 connectDB();
+
+if(process.env.NODE_ENV === 'dev'){
+    app.use(morgan('dev'))
+}
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
