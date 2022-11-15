@@ -65,6 +65,9 @@ exports.reviewProduct = asyncHandler(async (req, res, next) => {
     //else
 
     //review
+    if(!req.body.rating || !req.body.comment){
+        return next(new ErrorResponse('Please add review and rating', 400))
+    }
     const review = {
         ...req.body,
         name: req.user.name,

@@ -24,14 +24,13 @@ export default function HomePage() {
         setProduct(p)
         handleShow()
     }
-
-
+    const { loading, products, error } = useSelector(state => state.products);
+    const { success } = useSelector(state => state.addReview);
 
     useEffect(() => {
         dispatch(getAllProducts());
-    }, [])
+    }, [success])
 
-    const { loading, products, error } = useSelector(state => state.products);
 
     if (loading) {
         return <Loader />
