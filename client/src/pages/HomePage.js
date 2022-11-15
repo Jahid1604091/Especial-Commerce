@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row, Placeholder, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getAllProducts } from '../actions/products';
 import Error from '../components/Error';
 import Loader from '../components/Loader';
@@ -10,11 +10,10 @@ import OffCanvas from '../components/Offcanvas';
 import Product from '../components/Product'
 
 export default function HomePage() {
-
-
     const [show, setShow] = useState(false);
     const [product, setProduct] = useState(null);
     const dispatch = useDispatch();
+    const {query} = useParams();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -27,9 +26,10 @@ export default function HomePage() {
     const { loading, products, error } = useSelector(state => state.products);
     const { success } = useSelector(state => state.addReview);
 
+   
     useEffect(() => {
-        dispatch(getAllProducts());
-    }, [success])
+        dispatch(getAllProducts(query));
+    }, [success,query])
 
 
     if (loading) {

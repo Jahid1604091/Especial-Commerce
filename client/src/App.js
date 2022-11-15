@@ -23,6 +23,7 @@ function App() {
       <main style={{ minHeight: "81vh" }}>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/search/:query" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />

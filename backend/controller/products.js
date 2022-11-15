@@ -26,11 +26,18 @@ exports.updateProduct = asyncHandler(async (req, res, next) => {
     });
 });
 
-//@route    /api/products
+//@route    /api/products?q='df'
 //@desc     get all products
 //@access   public
 exports.getAllProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find({});
+    let query = '';
+    query = req.query.q ? {
+        name: {
+            $regex: req.query.q,
+            $options:'i'
+        }
+    } : {};
+    const products = await Product.find(query);
     res.status(200).json(products)
 });
 
@@ -65,7 +72,7 @@ exports.reviewProduct = asyncHandler(async (req, res, next) => {
     //else
 
     //review
-    if(!req.body.rating || !req.body.comment){
+    if (!req.body.rating || !req.body.comment) {
         return next(new ErrorResponse('Please add review and rating', 400))
     }
     const review = {
@@ -83,7 +90,7 @@ exports.reviewProduct = asyncHandler(async (req, res, next) => {
     await product.save();
     return res.status(201).json({
         success: true,
-        message:'review added'
+        message: 'review added'
     });
 });
 

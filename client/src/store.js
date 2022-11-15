@@ -51,7 +51,8 @@ const initialState = {
         shippingAddress: shippingAddressFromStorage,
         paymentMethod: paymentMethodFromStorage,
     },
-    userLogin: { userInfo: userInfoFromLocalStorage }
+    userLogin: { userInfo: userInfoFromLocalStorage },
+
 }
 
 //if multiple middleware then add in the array
