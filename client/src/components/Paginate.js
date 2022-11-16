@@ -8,7 +8,7 @@ export default function Paginate({ pages, page, query = '',isAdmin=false }) {
        !isAdmin ? query ? navigate(`/search/${query}/page/${x + 1}`) : navigate(`/page/${x + 1}`) : navigate(`/admin/products/${x+1}`)
     }
     return pages > 1 && (
-        <Pagination>
+        <Pagination className="d-flex justify-content-center">
             {
                 [...Array(pages).keys()].map(x => (
 

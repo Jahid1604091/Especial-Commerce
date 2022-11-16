@@ -9,6 +9,7 @@ import Nothing from '../components/Nothing';
 import OffCanvas from '../components/Offcanvas';
 import Paginate from '../components/Paginate';
 import Product from '../components/Product'
+import TopProductsCarousel from '../components/TopProductsCarousel';
 
 export default function HomePage() {
     const [show, setShow] = useState(false);
@@ -52,18 +53,34 @@ export default function HomePage() {
     return (
         <Container fluid>
             <Row>
-                <h2>Featured Products</h2>
+
+                <h2>Trending Now</h2>
+                <Col className='mx-auto py-2'>
+                    <TopProductsCarousel />
+
+                </Col>
+
+                <h2>Our Products</h2>
+             
                 {
                     products.length > 0 && products.map(product =>
-                        <Col key={product._id} sm={12} md={4} xl={3}>
+                        
+                        <Col className='px-2' key={product._id} sm={12} md={4} xl={3}>
                             <Product handleClick={handleClick} {...product} />
                         </Col>)
                 }
+
+               
+                <Col sm={12}>
+                    <Paginate page={page} pages={pages} query={query ? query : ''} />
+                </Col>
             </Row>
-            <Paginate page={page} pages={pages} query={query ? query : ''} />
+
             <OffCanvas show={show}
                 handleClose={handleClose}
                 product={product} />
+
+
 
         </Container>
     )

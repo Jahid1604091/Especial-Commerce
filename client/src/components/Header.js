@@ -40,7 +40,7 @@ export default function Header() {
           <Form className="d-flex" onSubmit={handleSearch}>
             <Form.Control
               type="search"
-              placeholder="Search"
+              placeholder="Search Products"
               className="rounded-0"
               aria-label="Search"
               value={query}
