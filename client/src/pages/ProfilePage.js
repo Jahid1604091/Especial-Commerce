@@ -8,6 +8,7 @@ import { getMyOrders } from '../actions/orders'
 import { getProfile, updateProfile } from '../actions/user'
 import AlertDismissible from '../components/Alert'
 import Loader from '../components/Loader'
+import { USER_PROFILE_UPDATE_RESET } from '../types'
 
 
 export default function ProfilePage() {
@@ -34,6 +35,7 @@ export default function ProfilePage() {
         }
         else {
             if (!user.success) {
+                dispatch({type:USER_PROFILE_UPDATE_RESET})
                 dispatch(getProfile())
             }
             else {
