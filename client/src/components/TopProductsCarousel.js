@@ -7,6 +7,7 @@ import { Image } from 'react-bootstrap';
 import Error from './Error';
 import Loader from './Loader';
 import { Link } from 'react-router-dom';
+import { URL } from '../utils/constants';
 
 export default function TopProductsCarousel() {
     const dispatch = useDispatch();
@@ -40,7 +41,7 @@ export default function TopProductsCarousel() {
                 {
                     products.map(p => (
                         <div key={p._id}>
-                           <Image src={p.image} height='350'/>
+                           <Image src={URL+ p.image} height='350'/>
                             <p className="legend">{p.name}</p>
                         </div>
 

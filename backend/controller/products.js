@@ -1,7 +1,8 @@
 const Product = require('../models/Product');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
-
+const path = require('path');
+const { unlink } = require('fs');
 //@desc     create product
 //@route    POST    /api/products
 //@access   private/Admin
@@ -53,7 +54,7 @@ exports.getAllProducts = asyncHandler(async (req, res) => {
 //@desc     get all top products
 //@access   public
 exports.getTopProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find({}).sort({ rating: -1 }).limit(4)
+    const products = await Product.find({}).sort({ rating: -1 })
     res.status(200).json({
         products
     })
@@ -71,7 +72,16 @@ exports.getProduct = asyncHandler(async (req, res) => {
 //@desc     DELETE product
 //@access   protected/admin
 exports.deleteProduct = asyncHandler(async (req, res) => {
-    const product = await Product.findByIdAndRemove(req.params.id);
+    const product = await Product.findById(req.params.id);
+    console.log(product.image)
+    //remove the image
+    unlink(path.join(__dirname, `../${product?.image}`),
+        (err) => {
+            err && console.log(`Error in Removing File ${err}`)
+        }
+    )
+
+    await product.remove();
     return res.status(200).json({
         success: true,
         data: product.name + ' is removed!'

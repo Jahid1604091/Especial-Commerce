@@ -12,6 +12,7 @@ import OrderDetailsPage from './pages/OrderDetailsPage';
 import PaymentPage from './pages/PaymentPage';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PlaceOrderPage from './pages/PlaceOrderPage';
+import Products from './pages/Products';
 import ProfilePage from './pages/ProfilePage';
 import RegisterPage from './pages/RegisterPage';
 import ShippingPage from './pages/ShippingPage';
@@ -22,10 +23,11 @@ function App() {
       <Header />
       <main style={{ minHeight: "81vh" }}>
         <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/page/:pageNumber" element={<HomePage />} />
           <Route path="/search/:query" element={<HomePage />} />
           <Route path="/search/:query/page/:pageNumber" element={<HomePage />} />
-          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />

@@ -1,5 +1,5 @@
-import axios from "axios";
 import { GET_MY_ORDERS_RESET, GET_USER_PROFILE_FAIL, GET_USER_PROFILE_REQUEST, GET_USER_PROFILE_RESET, GET_USER_PROFILE_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_UPDATE_FAIL, USER_PROFILE_UPDATE_REQUEST, USER_PROFILE_UPDATE_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from "../types";
+import { axios_instance } from "../utils/axios";
 
 export const login = (email,password) => async(dispatch)=>{
     try {
@@ -11,7 +11,7 @@ export const login = (email,password) => async(dispatch)=>{
                 'Content-Type':'application/json'
             }
         }
-        const {data} = await axios.post('/api/users/login',{email,password},config)
+        const {data} = await axios_instance.post('/api/users/login',{email,password},config)
         
         dispatch({
             type:USER_LOGIN_SUCCESS,
@@ -38,7 +38,7 @@ export const register = (name,email,password) => async(dispatch)=>{
                 'Content-Type':'application/json'
             }
         }
-        const {data} = await axios.post('/api/users',{name,email,password},config)
+        const {data} = await axios_instance.post('/api/users',{name,email,password},config)
         
         dispatch({
             type:USER_REGISTER_SUCCESS,
@@ -71,7 +71,7 @@ export const getProfile = () => async(dispatch,getState)=>{
                 Authorization:`Bearer ${token}`
             }
         }
-        const {data} = await axios.get('/api/users/profile',config)
+        const {data} = await axios_instance.get('/api/users/profile',config)
         
         dispatch({
             type:GET_USER_PROFILE_SUCCESS,
@@ -99,7 +99,7 @@ export const updateProfile = (userData) => async(dispatch,getState)=>{
                 Authorization:`Bearer ${token}`
             }
         }
-        const {data} = await axios.put('/api/users/profile',userData,config)
+        const {data} = await axios_instance.put('/api/users/profile',userData,config)
         
         dispatch({
             type:USER_PROFILE_UPDATE_SUCCESS,

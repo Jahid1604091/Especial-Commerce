@@ -1,11 +1,12 @@
-import axios from "axios";
+
 import Swal from "sweetalert2";
 import { ADD_TO_CART, CART_SAVE_PAYMENT_METHOD, CART_SAVE_SHIPPING_ADDRESS, CLEAR_CART, REMOVE_FROM_CART } from "../types"
+import { axios_instance } from "../utils/axios";
 
 //getState return all store states
 export const addToCart = (id,qty) => async (dispatch,getState) =>{
     
-    const {data:product} = await axios.get(`/api/products/${id}`);
+    const {data:product} = await axios_instance.get(`/api/products/${id}`);
     // const product = getState().products.products.find(p=>p._id === id)
    
     dispatch({

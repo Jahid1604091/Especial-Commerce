@@ -2,6 +2,7 @@ import React from 'react'
 import { Card } from 'react-bootstrap'
 import Rating from './Rating'
 import {Link} from 'react-router-dom'
+import { URL } from '../utils/constants'
 export default function Product({handleClick, _id, name, image, description, brand, category, price, rating, numReviews }) {
     return (
         <Card className='my-2 p-3 shadow border-0'>
@@ -11,7 +12,7 @@ export default function Product({handleClick, _id, name, image, description, bra
                 textTransform: 'uppercase',
                 fontWeight: 'bold'
             }}>
-                <Card.Img src={image} alt={name} variant='top' />
+                <Card.Img src={URL+image} alt={name} variant='top' />
                 <Card.Body>
                     <Card.Title as='div'>  {name}</Card.Title>
                 </Card.Body>

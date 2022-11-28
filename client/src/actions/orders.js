@@ -1,5 +1,5 @@
 import { CREATE_ORDER_FAIL, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, GET_MY_ORDERS_DETAILS_FAIL, GET_MY_ORDERS_DETAILS_REQUEST, GET_MY_ORDERS_DETAILS_SUCCESS, GET_MY_ORDERS_FAIL, GET_MY_ORDERS_REQUEST, GET_MY_ORDERS_SUCCESS, ORDER_PAY_FAIL, ORDER_PAY_REQUEST, ORDER_PAY_SUCCESS } from "../types";
-import axios from 'axios';
+import { axios_instance } from "../utils/axios";
 //getState return all store states
 export const createOrder = (order) => async (dispatch, getState) => {
 
@@ -14,7 +14,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
                 Authorization: `Bearer ${token}`
             }
         }
-        const { data } = await axios.post('/api/orders', order, config)
+        const { data } = await axios_instance.post('/api/orders', order, config)
 
         dispatch({
             type: CREATE_ORDER_SUCCESS,
@@ -44,7 +44,7 @@ export const getMyOrders = () => async (dispatch, getState) => {
                 Authorization: `Bearer ${token}`
             }
         }
-        const { data: { data } } = await axios.get('/api/orders/myorders', config)
+        const { data: { data } } = await axios_instance.get('/api/orders/myorders', config)
 
         dispatch({
             type: GET_MY_ORDERS_SUCCESS,
@@ -72,7 +72,7 @@ export const getMyOrderDetails = (id) => async (dispatch, getState) => {
                 Authorization: `Bearer ${token}`
             }
         }
-        const { data:{data} } = await axios.get(`/api/orders/myorders/${id}`, config)
+        const { data:{data} } = await axios_instance.get(`/api/orders/myorders/${id}`, config)
     
         dispatch({
             type: GET_MY_ORDERS_DETAILS_SUCCESS,
@@ -100,7 +100,7 @@ export const payOrder = (id) => async (dispatch, getState) => {
                 Authorization: `Bearer ${token}`
             }
         }
-        const { data:{data} } = await axios.get(`/api/orders/myorders/${id}/pay`,config)
+        const { data:{data} } = await axios_instance.get(`/api/orders/myorders/${id}/pay`,config)
     
         dispatch({
             type: ORDER_PAY_SUCCESS,

@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const bodyParser = require("body-parser")    
+const bodyParser = require("body-parser")
 const path = require('path');
 const PORT = 5000 || process.env.PORT;
 const cors = require('cors');
@@ -10,7 +10,7 @@ const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
 connectDB();
 
-if(process.env.NODE_ENV === 'dev'){
+if (process.env.NODE_ENV === 'dev') {
     app.use(morgan('dev'))
 }
 
@@ -24,8 +24,10 @@ app.use('/api/orders', require('./routes/orders'));
 app.use('/api/upload', require('./routes/uploads'));
 app.use('/api/payment', require('./routes/ssl'));
 
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
-
+app.use('/uploads', express.static(path.join(__dirname, './uploads')))
+// app.get('/uploads/:filename', (req, res) => {
+//     res.sendFile(req.params.filename, { root: path.join(__dirname, './uploads') });
+// })
 
 
 app.use(errorHandler);

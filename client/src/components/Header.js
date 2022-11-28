@@ -11,8 +11,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../actions/user';
 export default function Header() {
   const dispatch = useDispatch()
-  const navigate = useNavigate();
-  const [query, setQuery] = useState('')
+
   const { userInfo: { data } } = useSelector(state => state.userLogin);
 
   const handleLogout = (e) => {
@@ -20,38 +19,29 @@ export default function Header() {
     dispatch(logout())
     // navigate('/login')
   }
-  const handleSearch = (e) => {
-    e.preventDefault()
-    //dispatch
-    if(query.trim()){
-      navigate(`/search/${query}`)
-    }
-    else{
-      navigate('/')
-    }
-    
-  }
+
+
+
   return (
-    <Navbar bg="dark" variant='dark' expand="lg">
+    <Navbar bg="primary" variant='primary' expand="lg">
       <Container>
-        <Navbar.Brand as={Link} to="/">E EC</Navbar.Brand>
+        {/* <Navbar.Brand as={Link} to="/">
+          
+        </Navbar.Brand> */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Form className="d-flex" onSubmit={handleSearch}>
-            <Form.Control
-              type="search"
-              placeholder="Search Products"
-              className="rounded-0"
-              aria-label="Search"
-              value={query}
-              onChange={e=>setQuery(e.target.value)}
-            />
-            <Button type='submit' variant="outline-info rounded-0">Search</Button>
-          </Form>
+
           <Nav className="ms-auto">
 
             {data ? <NavDropdown title={data.name} id="basic-nav-dropdown" className='rounded-0'>
-              <NavDropdown.Item as={Link} to="/cart">Cart</NavDropdown.Item>
+              {data.role !== 'admin' ?
+                <NavDropdown.Item as={Link} to="/cart">Cart</NavDropdown.Item> :
+                <>
+                  <NavDropdown.Item as={Link} to="/admin/products">Product List</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/admin/orders">Order List</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/admin/users">User List</NavDropdown.Item>
+                </>
+              }
               <NavDropdown.Item as={Link} to="/profile">
                 Profile
               </NavDropdown.Item>

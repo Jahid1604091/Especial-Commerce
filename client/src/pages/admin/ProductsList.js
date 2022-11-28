@@ -13,6 +13,7 @@ import { getAllProducts } from '../../actions/products';
 import AddProduct from '../../components/admin/AddProductModal';
 import EditProduct from '../../components/admin/EditproductModal';
 import Paginate from '../../components/Paginate';
+import { URL } from '../../utils/constants';
 
 
 export default function ProductsList() {
@@ -121,7 +122,7 @@ export default function ProductsList() {
                                     <tr key={product._id}>
                                         <td>{idx + 1}</td>
                                         
-                                        <td>{<img src={`${product.image}`} alt="" width='50' height='40'/>}</td>
+                                        <td>{<img src={`${URL}${product.image}`} alt={product.name} width='50' height='40'/>}</td>
                                         <td>{product.name}</td>
                                         <td>{product.brand}</td>
                                         <td>{product.category}</td>

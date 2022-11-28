@@ -9,8 +9,9 @@ import Nothing from '../components/Nothing';
 import OffCanvas from '../components/Offcanvas';
 import Paginate from '../components/Paginate';
 import Product from '../components/Product'
+import SearchBox from '../components/SearchBox';
 import TopProductsCarousel from '../components/TopProductsCarousel';
-
+import logo from '../assets/modern.png'
 export default function HomePage() {
     const [show, setShow] = useState(false);
     const [product, setProduct] = useState(null);
@@ -53,7 +54,16 @@ export default function HomePage() {
     return (
         <Container fluid>
             <Row>
+                <Col md={4} className='mx-auto'>
+                    <img src={logo} width='110' alt="" />
+                </Col>
+                <Col md={8} className='mx-auto my-4'>
+                    <SearchBox />
+                </Col>
 
+            </Row>
+
+            <Row>
                 <h2>Trending Now</h2>
                 <Col className='mx-auto py-2'>
                     <TopProductsCarousel />
@@ -61,19 +71,20 @@ export default function HomePage() {
                 </Col>
 
                 <h2>Our Products</h2>
-             
+
                 {
                     products.length > 0 && products.map(product =>
-                        
+
                         <Col className='px-2' key={product._id} sm={12} md={4} xl={3}>
                             <Product handleClick={handleClick} {...product} />
                         </Col>)
                 }
 
-               
-                <Col sm={12}>
+
+                <div className='text-center my-2'>
+                    <Link to='/products' className='btn btn-primary px-4 text-uppercase rounded-0'>See all</Link>
                     <Paginate page={page} pages={pages} query={query ? query : ''} />
-                </Col>
+                </div>
             </Row>
 
             <OffCanvas show={show}

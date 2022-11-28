@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 import React, { useEffect, useState } from 'react';
 import { Col,Form, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProductByAdmin } from '../../actions/admin';
 import Toast from '../../utils/alert';
+import { axios_instance } from '../../utils/axios';
 import AlertDismissible from '../Alert';
 import Loader from '../Loader';
 
@@ -42,7 +43,7 @@ export default function AddProduct({ show, setShow }) {
     setUploading(true);
 
     try {
-      const { data } = await axios.post('/api/upload', form_data, {
+      const { data } = await axios_instance.post('/api/upload', form_data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -50,7 +51,7 @@ export default function AddProduct({ show, setShow }) {
 
       setFormData({
         ...formData,
-        image: data
+        image: data 
       })
 
       setUploading(false)
@@ -61,7 +62,6 @@ export default function AddProduct({ show, setShow }) {
   }
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(formData)
     dispatch(addProductByAdmin(formData))
   }
 
@@ -120,7 +120,7 @@ export default function AddProduct({ show, setShow }) {
 
             <Form.Group className="mb-2" controlId="formGridAddress1">
               <Form.Label>Product Image</Form.Label>
-              <Form.Control type='file' onChange={handleUploading} custom placeholder="Sample Product" />
+              <Form.Control type='file' accept=".png, .jpg, .jpeg" onChange={handleUploading} custom placeholder="Sample Product" />
               {uploading && <Loader/>}
             </Form.Group>
 
