@@ -11,7 +11,8 @@ import Paginate from '../components/Paginate';
 import Product from '../components/Product'
 import SearchBox from '../components/SearchBox';
 import TopProductsCarousel from '../components/TopProductsCarousel';
-import logo from '../assets/modern.png'
+import logo from '../assets/mp.png'
+import Hero from '../components/Hero';
 export default function HomePage() {
     const [show, setShow] = useState(false);
     const [product, setProduct] = useState(null);
@@ -26,73 +27,67 @@ export default function HomePage() {
         setProduct(p)
         handleShow()
     }
+
     const { loading, products, error, page, pages } = useSelector(state => state.products);
     const { success } = useSelector(state => state.addReview);
-
 
     useEffect(() => {
         dispatch(getAllProducts(query, Number(pageNumber) || 1));
     }, [success, query, Number(pageNumber) || 1])
 
-
     if (loading) {
         return <Loader />
     }
+
     if (error) {
         return <Error variant='danger' children={
             <>
-                <h2>Oops!!!</h2>
+                <h4>Oops!!!</h4>
                 <h3>Something Went Wrong</h3>
                 <Link to='/' className='btn btn-outline-info'>Go Back</Link>
             </>
         } />
     }
+
     if (products.length === 0) {
         return <Nothing />
     }
 
     return (
-        <Container fluid>
-            <Row>
-                <Col md={4} className='mx-auto'>
-                    <img src={logo} width='110' alt="" />
-                </Col>
-                <Col md={8} className='mx-auto my-4'>
-                    <SearchBox />
-                </Col>
+        <>
+            <Hero />
+            <Container fluid>
+                <Row>
+                    <Col className='d-none d-md-block mx-auto py-2'>
+                    <h4>Trending Now</h4>
+                        <TopProductsCarousel />
 
-            </Row>
+                    </Col>
 
-            <Row>
-                <h2>Trending Now</h2>
-                <Col className='mx-auto py-2'>
-                    <TopProductsCarousel />
+                    <h4>Our Products</h4>
 
-                </Col>
+                    {
+                        products.length > 0 && products.map(product =>
 
-                <h2>Our Products</h2>
-
-                {
-                    products.length > 0 && products.map(product =>
-
-                        <Col className='px-2' key={product._id} sm={12} md={4} xl={3}>
-                            <Product handleClick={handleClick} {...product} />
-                        </Col>)
-                }
+                            <Col className='px-2' key={product._id} sm={12} md={4} xl={3}>
+                                <Product handleClick={handleClick} {...product} />
+                            </Col>)
+                    }
 
 
-                <div className='text-center my-2'>
-                    <Link to='/products' className='btn btn-primary px-4 text-uppercase rounded-0'>See all</Link>
-                    <Paginate page={page} pages={pages} query={query ? query : ''} />
-                </div>
-            </Row>
+                    <div className='text-center my-2'>
+                        <Link to='/products' className='btn px-4 text-uppercase rounded-0'>See all</Link>
+                        {/* <Paginate page={page} pages={pages} query={query ? query : ''} /> */}
+                    </div>
+                </Row>
 
-            <OffCanvas show={show}
-                handleClose={handleClose}
-                product={product} />
+                <OffCanvas show={show}
+                    handleClose={handleClose}
+                    product={product} />
 
 
 
-        </Container>
+            </Container>
+        </>
     )
 }

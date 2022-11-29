@@ -31,7 +31,7 @@ exports.updateProduct = asyncHandler(async (req, res, next) => {
 //@desc     get all products
 //@access   public
 exports.getAllProducts = asyncHandler(async (req, res) => {
-    const per_page = 4;
+    const per_page = 6;
     const page = Number(req.query.pageNumber) || 1;
     let query = '';
     query = req.query.q ? {
@@ -54,7 +54,7 @@ exports.getAllProducts = asyncHandler(async (req, res) => {
 //@desc     get all top products
 //@access   public
 exports.getTopProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find({}).sort({ rating: -1 })
+    const products = await Product.find({}).sort({ rating: -1 }).limit(4)
     res.status(200).json({
         products
     })

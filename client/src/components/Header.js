@@ -9,6 +9,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../actions/user';
+import logo from '../assets/mp.png'
 export default function Header() {
   const dispatch = useDispatch()
 
@@ -23,11 +24,11 @@ export default function Header() {
 
 
   return (
-    <Navbar bg="primary" variant='primary' expand="lg">
+    <Navbar expand="lg">
       <Container>
-        {/* <Navbar.Brand as={Link} to="/">
-          
-        </Navbar.Brand> */}
+        <Navbar.Brand as={Link} to="/">
+            <img src={logo} alt="" width='50' />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
 

@@ -12,7 +12,14 @@ export default function Product({handleClick, _id, name, image, description, bra
                 textTransform: 'uppercase',
                 fontWeight: 'bold'
             }}>
-                <Card.Img src={URL+image} alt={name} variant='top' />
+                <Card.Img src={URL+image} alt={name} variant='top' 
+                className='img-fluid'
+                style={{
+                    height:'160px', 
+                    maxWidth:'150px',
+                    
+                }} 
+                />
                 <Card.Body>
                     <Card.Title as='div'>  {name}</Card.Title>
                 </Card.Body>

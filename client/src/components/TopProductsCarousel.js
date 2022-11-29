@@ -8,6 +8,7 @@ import Error from './Error';
 import Loader from './Loader';
 import { Link } from 'react-router-dom';
 import { URL } from '../utils/constants';
+import styled from 'styled-components';
 
 export default function TopProductsCarousel() {
     const dispatch = useDispatch();
@@ -28,20 +29,23 @@ export default function TopProductsCarousel() {
         } />
     }
     return (
-        <div>
+        <Wrapper>
             <Carousel 
             transitionTime={1000}
             autoPlay='true'
             infiniteLoop='true'
             centerMode='true'
-            centerSlidePercentage={50}
-            dynamicHeight='true' 
+            centerSlidePercentage={25}
+            dynamicHeight='false' 
+            showStatus='false'
             
            >
                 {
                     products.map(p => (
                         <div key={p._id}>
-                           <Image src={URL+ p.image} height='350'/>
+                           <Image src={URL+ p.image} height='250' style={{
+                            width:"200px"
+                           }}/>
                             <p className="legend">{p.name}</p>
                         </div>
 
@@ -49,6 +53,16 @@ export default function TopProductsCarousel() {
                 }
 
             </Carousel>
-        </div>
+        </Wrapper>
     )
 }
+
+const Wrapper = styled.section`
+    .carousel-status{
+        display:none ;
+    }
+    .legend{
+        background-color:var(--clr-primary-5) !important;
+        
+    }
+`
